@@ -41,6 +41,10 @@ public class Array_Objects {
             System.out.println("For employee No." + (i+1));
             st[i].disp();
         }
+        //Enhance Loop for displaying name and salary of employees
+        for(employee emp : st) {
+            System.out.println(emp.name + " : "+ emp.salary);
+        }
         
         
      }
