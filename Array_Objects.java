@@ -32,7 +32,7 @@ public class Array_Objects {
        Scanner sc = new Scanner(System.in);
         System.out.println("Enter the size of array");
         int n = sc.nextInt();
-        employee[] st = new employee[n];
+        employee[] st = new employee[n]; //Creating the Array of Objects of size n
         for(int i=0;i<n;i++) {
             System.out.println("For employee No." + (i+1));
             st[i] = new employee();
