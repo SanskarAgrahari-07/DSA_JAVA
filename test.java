@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 class Check {
     Scanner sc = new Scanner(System.in);
-    private int x;
+     int x;
     Check() {
         x = sc.nextInt();
     }
