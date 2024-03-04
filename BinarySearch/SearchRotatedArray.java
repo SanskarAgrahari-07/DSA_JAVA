@@ -23,14 +23,14 @@ public class SearchRotatedArray {
         return binarySearch(arr, target, pivot+1, arr.length-1);
     }
 
-    static int binarySearch(int[] arr,int target, int s, int e) {
-        while(s <= e) {
-            int mid = s + (e-s)/2;
+    static int binarySearch(int[] arr,int target, int start, int end) {
+        while(start <= end) {
+            int mid = start + (end-start)/2;
             if(target > arr[mid]) {
-                s = mid+1;
+                start = mid+1;
             }
             else if(target < arr[mid]) {
-                e  = mid-1;
+                end  = mid-1;
             }
             else if(target == arr[mid]) {
                return mid;

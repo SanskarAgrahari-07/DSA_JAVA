@@ -65,9 +65,12 @@ public class singlyLinkedList {
         list3.printList();
 
         list4.insertLast(1);
+        list4.insertLast(1);
         list4.insertLast(3);
+        list4.insertLast(1);
         list4.insertLast(4);
         list4.insertLast(5);
+        list4.insertLast(1);
         list4.insertLast(6);
         list4.printList();
 
@@ -78,7 +81,24 @@ public class singlyLinkedList {
         list4.printList();
 
         list4.splitList();
-        // list4.printList();
+        
+        list4.printList();
+        int ans = list4.frequecy(1);
+        System.out.println(ans);
+
+        list5.insertLast(1);
+        list5.insertLast(2);
+        list5.insertLast(-1);
+        list5.insertLast(4);
+        list5.insertLast(-2);
+        list5.insertLast(-3);
+        list5.insertLast(5);
+        list5.printList();
+        list5.positiveNegative();
+        list5.printList();
+        list5.removeAlternateNode();
+        list5.printList();
+
 
 
     }
@@ -440,6 +460,45 @@ public Node listConcatenate(LL list, LL list1) {
                 pre = node.next;
                 node = node.next.next;
             }
+        }
+    }
+
+    public int frequecy(int val) {
+        Node node = head;
+        int count =0;
+        while(node != null) {
+            if(node.value == val) {
+                count++;
+            }
+            node = node.next;
+        }
+        return count;
+    }
+
+    public void positiveNegative() {
+        LL pos = new LL();
+        LL neg = new LL();
+        Node node = head;
+        while(node != null) {
+            if(node.value >= 0) {
+                pos.insertLast(node.value);
+            }
+            else {
+                neg.insertLast(node.value);
+            }
+            node = node.next;
+        }
+        System.out.println("The positive elements of the list are:");
+        pos.printList();
+        System.out.println("The negative elements of the list are:");
+        neg.printList();
+    }
+
+    public void removeAlternateNode() {
+        Node node = head;
+        while(node.next != null ) {
+            node.next = node.next.next;
+            node = node.next;
         }
     }
 
