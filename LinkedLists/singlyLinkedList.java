@@ -11,7 +11,7 @@ public class singlyLinkedList {
         LL list3 = new LL();
         LL list4 = new LL();
         LL list5 = new LL();
-        LL list6 = new LL();
+    
 
     
         list.insertFirst(3);
