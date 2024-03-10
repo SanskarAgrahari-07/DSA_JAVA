@@ -29,6 +29,61 @@ class Deque {
             queue[front]=ele;
         }
     }
+
+    public void insertRear(int val) {
+        if(rear == size-1) {
+            System.out.println("Overflow");
+        }
+        else if(rear == -1) {
+            front = rear = 0;
+            queue[rear] = val;
+        }
+        else {
+            queue[rear++]= val;
+        }
+    }
+
+    public void deleteFront() {
+        if(front == -1) {
+            System.out.println("Queue overflow");
+        }
+        else if(front ==  rear) {
+            int x = queue[front];
+            front = rear =-1;
+            System.out.println(x + " has been deleted.");
+        }
+        else {
+            int x = queue[front];
+            front++;
+            System.out.println(x + " has been deleted.");
+        }
+    }
+
+    public void deleteRear() {
+        if(rear == -1) {
+            System.out.println("Queue overflow");
+        }
+        else if(front ==  rear) {
+            int x = queue[rear];
+            front = rear =-1;
+            System.out.println(x + " has been deleted.");
+        }
+        else {
+            int x = queue[rear];
+            rear--;
+            System.out.println(x + " has been deleted.");
+        }
+    }
+
+    public void printQueue() {
+        if(front == -1) {
+            System.out.println("Queue overflow");
+        }
+        for(int i=front; i<= rear; i++) {
+            System.out.println(queue[i] + "->");
+        }
+        System.out.println("End");
+    }
 }
 
 public class ImplementationDeque {
