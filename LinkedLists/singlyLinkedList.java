@@ -202,7 +202,12 @@ class LL {
 
      public int deleteLast() {
         Node node = head;
-        for(int i=0;i<size-2;i++) {
+        if(head.next == null) {
+            int val = head.value;
+            tail = head = null;
+            return val;
+        }
+        while(node.next.next != null) {
             node = node.next;
         }
         int val = tail.value;
