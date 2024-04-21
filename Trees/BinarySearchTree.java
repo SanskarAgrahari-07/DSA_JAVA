@@ -1,5 +1,7 @@
 package Trees;
 
+import java.util.NoSuchElementException;
+
 public class BinarySearchTree {
     private class  Node {
         int value;
@@ -24,6 +26,10 @@ public class BinarySearchTree {
         System.out.println("Root Node: " + b1.root.value);
         b1.displayInorder(b1.root);
         System.out.println("End");
+        b1.displayPreOrder(b1.root);
+        System.out.println("End");
+        b1.displayPostOrder(b1.root);
+        System.out.println("End");
         if(b1.search(110))
             System.out.println("value found");
         else {
@@ -33,12 +39,17 @@ public class BinarySearchTree {
         System.out.println("The total number of internal nodes is " + b1.countInternalNode());
         System.out.println("The height of the Binary Tree is " + b1.maxHeight());
         System.out.println("The level of 15 is "+ b1.findLevel(15));
+        System.out.println("The minimum element of the tree is " + b1.minNode(b1.root));
+        System.out.println("The maximum element of the tree is " + b1.maxNode());
+        System.out.println("The total number of node is " + (b1.countExternalNode()+b1.countInternalNode()));
+        // b1.printNodes();
+        b1.root = b1.deleteNode(8);
+        System.out.println("Root Node: " + b1.root.value);
+        b1.displayInorder(b1.root);
+        System.out.println("End");
+        Node prec = b1.getPredecessor(4);
+        System.out.println("The predecessor of 4 is " + prec.value);
 
-        // int[] nums = {1,2,3,4,5,6,7,8};
-        // b1.populateSorted(nums);
-        // System.out.println("Root Node: " + b1.root.value);
-        // b1.displayInorder(b1.root);
-        // System.out.println("End");
     }
 
     Node root;
@@ -73,6 +84,24 @@ public class BinarySearchTree {
 
     }
 
+    public void displayPostOrder(Node node) {
+        if(node != null) {
+            displayInorder(node.left);
+            displayInorder(node.right);
+            System.out.print(node.value + "-");
+           
+        }
+    }
+
+    public void displayPreOrder(Node node) {
+        if(node != null) {
+            System.out.print(node.value + "-");
+            displayInorder(node.left);
+            displayInorder(node.right);
+           
+        }
+    }
+
     public void displayInorder(Node node) {
         if(node != null) {
             displayInorder(node.left);
@@ -93,19 +122,7 @@ public class BinarySearchTree {
         return Math.abs(getHeight(node.left)-getHeight(node.right))<=1 && balanced(node.left) && balanced(node.right);
     }
 
-    public void populateSorted(int[] nums) {
-        populateSorted(nums,0,nums.length);
-    }
-
-    private void populateSorted(int[] nums, int start, int end) {
-        if(start >= end) {
-            return;
-        }
-        int mid = (start + end) / 2;
-        insertNode(nums[mid]);
-        populateSorted(nums, start, mid);
-        populateSorted(nums, mid+1, end);
-    }
+    
 
     public boolean search(int value) {
         boolean x = search(root,value);
@@ -173,11 +190,140 @@ public class BinarySearchTree {
             return (1+findLevel(node.right, value));
     }
 
+    public int minNode(Node node) {
+        // Node node = root;
+        while(node.left != null) {
+            node = node.left;
+        }
+        return node.value;
+    }
+
+    public int maxNode() {
+        Node node = root;
+        while (node.right != null) {
+            node = node.right;
+        }
+        return node.value;
+    }
+
+    // public void printNodes() {
+    //     Node node = root;
+    //     if(node == null)
+    //         return;
+    //     System.out.println(node.value);
+    //     printNodes(node);
+    //     if(node.left != null)
+    //         printNodes(node.left);
+    //     if(node.right != null)
+    //         printNodes(node.right);
+    // }
+    // private void printNodes(Node node) {
+        
+    //     if(node.left != null)
+    //         System.out.println(node.left.value);
+    //     if(node.right != null) 
+    //         System.out.println(node.right.value);
+    // }
+
+    public Node getMinNode(Node node) {
+        // Node node = root;
+        while(node.left != null) {
+            node = node.left;
+        }
+        return node;
+    }
+    
+
+    public Node deleteNode( int value) {
+        root = deleteNode(root,value);
+        return root;
+    }
+    private Node deleteNode(Node node , int value) {
+        Node parent = null;
+        while(node!= null && node.value != value) {
+            parent = node;
+
+            if(value < node.value) {
+                node = node.left;
+            }
+            else {
+                node = node.right;
+            }
+        }
+
+        if(node == null) {
+            return root;
+        }
+        // case:1->With No Children
+        if(node.left == null && node.right == null) {
+            if(node != root) {
+                if(parent.left == node) {
+                    parent.left = null;
+                }
+                else {
+                    parent.right = null;
+                }
+            }
+            else {
+                root = null;
+            }
+        }
+        // case:2->With two Children
+        else if(node.left != null && node.right != null) {
+            Node successor = getMinNode(node.right);
+            int data = successor.value;
+            deleteNode(root, data);
+            node.value = data;
+        }
+        // case:2->With one Children
+        else {
+            Node child = (node.left != null)? node.left : node.right;
+            if(node != root) {
+                if(node == parent.left) {
+                    parent.left = child;
+                }
+                else {
+                    parent.right = child;
+                }
+            }
+            else {
+                root = child;
+            }
+        }
+        return root;
+        
+    }
+
+    public Node findMaximum(Node node) {
+        while(node.right != null) {
+            node = node.right;
+        }
+        return node;
+    }
+    public Node getPredecessor(int value) {
+        Node prec=null;
+        return getPredecessor(root,prec,value);
+    }
+    private Node getPredecessor(Node root, Node prec, int value) {
+        if(root == null)
+            return prec;
+        
+        if(value == root.value) {
+                if(root.left != null) {
+                    return findMaximum(root.left);
+                }
+        }
+        else if(value < root.value) {
+           return getPredecessor(root.left, prec, value);
+        }
+        
+        else {
+            prec = root;
+            return getPredecessor(root.right, prec, value);
+        }
+        return prec;
+    }
+   
+
         
 }
-
-    
-        
-
-   
-        
