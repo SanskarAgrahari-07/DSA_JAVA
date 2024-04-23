@@ -2,19 +2,7 @@ package Trees;
 import java.util.*;
 
 public class BinaryTree {
-
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        BinaryTree b1 = new BinaryTree();
-        b1.insert(scanner);
-        b1.display();
-    }
-
-    public BinaryTree() {
-
-    }
-
-    private static class Node {
+   private static class Node {
         int value;
         Node left;
         Node right;
@@ -24,7 +12,20 @@ public class BinaryTree {
         }
 
     }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        BinaryTree b1 = new BinaryTree();
+        b1.insert(scanner);
+        b1.display();
+    }
     private Node root;
+    
+    public BinaryTree() {
+
+    }
+
+    
 
     public void insert(Scanner scanner) {
         System.out.println("Enter the root Node ");

@@ -90,5 +90,67 @@ public class BST_SortedArray {
             }
             return Math.abs(getHeight(node.left)-getHeight(node.right))<=1 && balanced(node.left) && balanced(node.right);
         }
+
+        public Node getMinimum(Node node) {
+            while(node!= null) {
+                node = node.left;
+            }
+            return node;
+        }
+
+        public Node deleteNode(int value) {
+            root = deleteNode(root,value);
+            return root;
+        }
+        private Node deleteNode(Node node, int value) {
+            Node parent = null;
+            while(node != null && node.value == value) {
+                parent = node;
+                if(value < node.value) {
+                    node = node.left;
+                }
+                else {
+                    node = node.right;
+                }
+            }
+            if(node == null) {
+                return root;
+            }
+
+            if(node.left == null && node.right == null) {
+                if(node != root) {
+                    if(parent.left == node) {
+                        parent.left = null;
+                    }
+                    else {
+                        parent.right = null;
+                    }
+                }
+                else {
+                    root = null;
+                }
+            }
+            else if(node.left != null && node.right != null) {
+                Node successor = getMinimum(node.right);
+                int data = successor.value;
+                deleteNode(root, data);
+                node.value = data;
+            }
+            else {
+                Node child = (node.left != null)?node.left : node.right;
+                if(node != null) {
+                    if(parent.left == node) {
+                        parent.left = child;
+                    }
+                    else {
+                        parent.right = child;
+                    }
+                }
+                else {
+                    root = child;
+                }
+            }
+            return root;
+        }
     
 }

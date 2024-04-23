@@ -1,7 +1,5 @@
 package Trees;
 
-import java.util.NoSuchElementException;
-
 public class BinarySearchTree {
     private class  Node {
         int value;
@@ -43,18 +41,22 @@ public class BinarySearchTree {
         System.out.println("The maximum element of the tree is " + b1.maxNode());
         System.out.println("The total number of node is " + (b1.countExternalNode()+b1.countInternalNode()));
         // b1.printNodes();
-        b1.root = b1.deleteNode(8);
-        System.out.println("Root Node: " + b1.root.value);
-        b1.displayInorder(b1.root);
-        System.out.println("End");
-        Node prec = b1.getPredecessor(4);
-        System.out.println("The predecessor of 4 is " + prec.value);
+        // b1.root = b1.deleteNode(8);
+        // System.out.println("Root Node: " + b1.root.value);
+        // b1.displayInorder(b1.root);
+        // System.out.println("End");
+        Node prec = b1.getPredecessor(8);
+        System.out.println("The predecessor of 8 is " + prec.value);
+        System.out.println("The maximum path is " + b1.maxPath());
 
     }
 
     Node root;
     BinarySearchTree() {
 
+    }
+    public  class Res {
+        public int val;
     }
    
 
@@ -206,24 +208,6 @@ public class BinarySearchTree {
         return node.value;
     }
 
-    // public void printNodes() {
-    //     Node node = root;
-    //     if(node == null)
-    //         return;
-    //     System.out.println(node.value);
-    //     printNodes(node);
-    //     if(node.left != null)
-    //         printNodes(node.left);
-    //     if(node.right != null)
-    //         printNodes(node.right);
-    // }
-    // private void printNodes(Node node) {
-        
-    //     if(node.left != null)
-    //         System.out.println(node.left.value);
-    //     if(node.right != null) 
-    //         System.out.println(node.right.value);
-    // }
 
     public Node getMinNode(Node node) {
         // Node node = root;
@@ -300,6 +284,8 @@ public class BinarySearchTree {
         }
         return node;
     }
+
+
     public Node getPredecessor(int value) {
         Node prec=null;
         return getPredecessor(root,prec,value);
@@ -323,7 +309,28 @@ public class BinarySearchTree {
         }
         return prec;
     }
-   
 
-        
+    public int findMax(Node node , Res res) {
+        if(node == null) {
+            return 0;
+        }
+        int l = findMax(node.left, res);
+        int r = findMax(node.right , res);
+        int single_single = Math.max(Math.max(l,r)+node.value, node.value);
+        int single_top = Math.max(single_single, l+r+node.value);
+
+        res.val = Math.max(res.val, single_top);
+        return single_single;
+    }
+
+    public int maxPath() {
+        return maxPath(root);
+    }
+    private int maxPath(Node node) {
+        Res res = new Res();
+        res.val = Integer.MIN_VALUE;
+        findMax(node,res);
+        return res.val;
+}   
+    
 }
